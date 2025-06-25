@@ -6,10 +6,10 @@ const UserSchema = new mongoose.Schema(
         email: { type: String, required: true, unique: true },
         password: { type: String, required: true },
         profileImageUrl: { type: String, default: null },
-        role: { type: String, enum: ["admin", "user"], default: ["member"] },
+        role: { type: String, enum: ["admin", "user"], default: "member" },
     },
     { timestamps: true}
 );
 
-model.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model('User', UserSchema);
 
