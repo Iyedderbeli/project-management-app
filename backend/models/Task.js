@@ -12,12 +12,12 @@ const todoSchema = new mongoose.Schema(
             description: { type: String },
             priority: { type: String,enum: ["Low", "Medium","High"], default: "Medium" },
             status: { type: String,enum: ["Pending", "In Progress","Completed"], default: "Pending" },
-            dueDate: { type: date, required: true },
+            dueDate: { type: Date, required: true },
             assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
             createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
             attachements: [{ type: String }],
             todoChecklist: [todoSchema],
             progress: { type: Number, default: 0 }
         },{timestamps:true});
-model.exports = mongoose.model('Task', taskSchema);
+module.exports = mongoose.model('Task', taskSchema);
 
