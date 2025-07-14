@@ -11,6 +11,7 @@ import { API_PATHS } from "../../utils/apiPaths";
 import axiosInstance from "../../utils/axiosInstance";
 import { addThousandsSeparator } from "../../utils/helper";
 import CustomPieChart from "../../components/Charts/CustomPieChart";
+import CustomBarChart from "../../components/Charts/CustomBarChart";
 
 const COLORS=["#8D51FF", "#00B8DB", "#7BCE00", "#C084FC", "#E879F9"];
 
@@ -120,14 +121,19 @@ const Dashboard = () => {
             <div className="flex items-center justify-between">
               <h5 className="text-medium">Task Distribution</h5>
             </div>
-
-            <CustomPieChart
-              data={pieChartData}
-              colors={COLORS}
-            />
-
+            <CustomPieChart data={pieChartData} colors={COLORS} />
           </div>
         </div>
+
+        <div>
+          <div className="card">
+            <div className="flex items-center justify-between">
+              <h5 className="text-medium">Task Priority Levels</h5>
+            </div>
+            <CustomBarChart data={barChartData} />
+          </div>
+        </div>
+
 
         <div className="md:col-span-2">
           <div className="card">

@@ -16,7 +16,7 @@ const todoSchema = new mongoose.Schema(
             assignedTo: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
             createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
             attachments: [{ type: String }],
-            todoChecklist: [todoSchema],
+            todoCheckList: [todoSchema],
             progress: { type: Number, default: 0 }
         },{timestamps:true});
 module.exports = mongoose.model('Task', taskSchema);
