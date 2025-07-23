@@ -11,6 +11,8 @@ import DashboardLayout from "../../components/layouts/DashboardLayout";
 import { API_PATHS } from "../../utils/apiPaths";
 import axiosInstance from "../../utils/axiosInstance";
 import { PRIORITY_DATA } from "../../utils/data";
+import DeleteAlert from "../../components/DeleteAlert";
+import Modal from "../../components/Modal";
 
 const CreateTask = () => {
   const location = useLocation();
@@ -173,7 +175,16 @@ const CreateTask = () => {
   };
 
   // Delete Task
-  const deleteTask = async () => {};
+  const deleteTask = async () => {
+    try {
+      await axiosInstance.delete(API_PATHS.TASKS.DELETE_TASK(taskId));
+      setOpenDeleteAlert(false);
+      toast.success("Deleted Successfully");
+      navigate('/admin/tasks');
+    } catch (error) {
+      console.error("Error Deleting: ", error.response?.data?.message || error.message);
+    }
+  };
 
   useEffect(() => {
     if (taskId) {
@@ -316,6 +327,17 @@ const CreateTask = () => {
           </div>
         </div>
       </div>
+
+      <Modal
+        isOpen={openDeleteAlert}
+        onClose={() => setOpenDeleteAlert(false)}
+        title="Delete Task"
+      >
+        <DeleteAlert
+          content="Are you dure you want to delete this task?"
+          onDelete={()=>deleteTask()}
+        />
+      </Modal>
     </DashboardLayout>
   );
 };
