@@ -4,6 +4,7 @@ import { LuPaperclip } from "react-icons/lu";
 
 const AddAttahchmentsInput = ({ attachments, setAttachments }) => {
   const [option, setOption] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
 
   // Function to handle adding an attachment
   const handleAddOption = () => {
@@ -25,7 +26,9 @@ const AddAttahchmentsInput = ({ attachments, setAttachments }) => {
       {attachments.map((item, index) => (
         <div
           key={`${item}-${index}`} // Ensure each item has a unique key
-          className="flex justify-between bg-gray-50 border border-gray-100 px-3 py-2 rounded-md mb-3 mt-2"
+          className={`flex items-center gap-3 border border-gray-100 px-3 py-2 rounded-md w-full ${
+            isFocused ? "border-blue-500 ring-1 ring-blue-500" : ""
+          }`}
         >
           <div className="flex-1 flex items-center gap-3">
             <LuPaperclip className="text-gray-400" />
@@ -42,7 +45,14 @@ const AddAttahchmentsInput = ({ attachments, setAttachments }) => {
 
       {/* Input field to add new attachments */}
       <div className="w-full flex items-center gap-5 mt-4">
-        <div className="flex items-center gap-3 border border-gray-100 px-3 py-2 rounded-md w-full">
+        <div
+          onFocus={() => setIsFocused(true)} // On focus
+          onBlur={() => setIsFocused(false)} // On blur
+          className={`flex items-center gap-3 border border-gray-100 px-3 py-2 rounded-md w-full ${
+            isFocused ? "border-blue-500 ring-1 ring-blue-500" : ""
+          }`}
+          tabIndex="0" // Make the div focusable
+        >
           <LuPaperclip className="text-gray-400" />
           <input
             type="text"

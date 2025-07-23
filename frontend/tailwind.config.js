@@ -4,7 +4,6 @@ module.exports = {
   theme: {
     extend: {},
   },
-  darkMode: false, // Force light mode
   plugins: [
     require("daisyui", {
       themes: [

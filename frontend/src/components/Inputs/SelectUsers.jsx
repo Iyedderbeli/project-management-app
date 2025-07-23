@@ -50,6 +50,7 @@ const SelectUsers = ({ selectedUsers, setSelectedUsers }) => {
   return (
     <div className="space-y-4 mt-0 h-fit w-md">
       {selectedUserAvatars.length === 0 && (
+        
         <button
           className="whitespace-nowrap flex items-center gap-3 text-[12px] text-sm font-medium  text-gray-700 hover:text-primary bg-gray-50 hover:bg-blue-50 px-4  py-3.5 rounded-lg border-gray-200/50 cursor-pointer"
           onClick={() => setIsModalOpen(true)}

@@ -3,6 +3,7 @@ import { HiMiniPlus, HiOutlineTrash } from "react-icons/hi2";
 
 const TodoListInput = ({ todoList, setTodoList }) => {
   const [option, setOption] = useState("");
+  const [isFocused, setIsFocused] = useState(false);
 
   // Function to handle adding a new task
   const handleAddOption = () => {
@@ -42,9 +43,9 @@ const TodoListInput = ({ todoList, setTodoList }) => {
       ))}
 
       {/* Input field for adding a task */}
-      <div className="flex items-center gap-5 mt-4">
+      <div className="flex items-center gap-5 mt-4 ">
         {/* Input field with task logo (SVG directly embedded) */}
-        <div className="flex items-center gap-3 border border-gray-100 px-3 py-2 rounded-md w-full">
+        <div className="flex items-center gap-3 border border-gray-100 px-3 py-2 rounded-md w-full ">
           {/* SVG Logo (Tasks App) */}
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +66,7 @@ const TodoListInput = ({ todoList, setTodoList }) => {
             placeholder="Add task"
             value={option}
             onChange={({ target }) => setOption(target.value)}
-            className="w-full text-[13px] text-black bg-white outline-none py-2"
+            className="w-full text-[13px] text-black bg-white outline-none py-2 "
           />
         </div>
 

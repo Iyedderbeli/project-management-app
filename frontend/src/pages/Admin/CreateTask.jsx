@@ -1,16 +1,16 @@
-import { useState } from "react";
+import moment from "moment";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { LuTrash2 } from "react-icons/lu";
 import { useLocation, useNavigate } from "react-router-dom";
 import AddAttahchmentsInput from "../../components/Inputs/AddAttahchmentsInput";
 import SelectDropdown from "../../components/Inputs/SelectDropdown";
 import SelectUsers from "../../components/Inputs/SelectUsers";
 import TodoListInput from "../../components/Inputs/TodoListInput";
 import DashboardLayout from "../../components/layouts/DashboardLayout";
-import { PRIORITY_DATA } from "../../utils/data";
 import { API_PATHS } from "../../utils/apiPaths";
 import axiosInstance from "../../utils/axiosInstance";
-import { LuTrash2 } from "react-icons/lu";
-import toast from "react-hot-toast";
-
+import { PRIORITY_DATA } from "../../utils/data";
 
 const CreateTask = () => {
   const location = useLocation();
@@ -53,17 +53,15 @@ const CreateTask = () => {
   const createTask = async () => {
     setLoading(true);
     try {
-      const todolist= taskData.todoCheckList?.map((item) => ({
+      const todolist = taskData.todoCheckList?.map((item) => ({
         text: item,
         completed: false,
       }));
-      
+
       const response = await axiosInstance.post(API_PATHS.TASKS.CREATE_TASK, {
         ...taskData,
         dueDate: new Date(taskData.dueDate).toISOString(),
         todoCheckList: todolist,
-
-        
       });
 
       toast.success("Task created successfully.");
@@ -71,13 +69,41 @@ const CreateTask = () => {
     } catch (error) {
       console.error("Error creating task:", error);
       setLoading(false);
-    }finally {
+    } finally {
       setLoading(false);
     }
   };
 
   // Update Task
-  const updateTask = async () => {};
+  const updateTask = async () => {
+    setLoading(true);
+    try {
+      const todolist = taskData.todoCheckList?.map((item) => { 
+        const prevTodoCheckList = currentTask?.todoCheckList || [];
+        const matchedTask = prevTodoCheckList.find((task) => task.text === item);
+
+        return {
+          text: item,
+          completed: matchedTask ? matchedTask.completed : false,
+        };
+      });
+      
+      const response = await axiosInstance.put(API_PATHS.TASKS.UPDATE_TASK(taskId),
+        {
+        ...taskData,
+        dueDate: new Date(taskData.dueDate).toISOString(),
+        todoCheckList: todolist,
+        }
+      );
+
+      toast.success("Task Updated Successfully");
+    } catch (error) {
+      console.error("Error Updating Task: ", error);
+      setLoading(false);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSubmit = async () => {
     setError(null);
@@ -115,10 +141,47 @@ const CreateTask = () => {
   };
 
   // get Task info by ID
-  const getTaskDetailsByID = async () => {};
+  const getTaskDetailsByID = async () => {
+    try {
+      const response = await axiosInstance.get(
+        API_PATHS.TASKS.GET_TASK_BY_ID(taskId)
+      );
+      if (response.data) {
+        const taskInfo = response.data;
+        setCurrentTask(taskInfo);
+
+        setTaskData((prevState) => ({
+          title: taskInfo.title,
+          description: taskInfo.description,
+          priority: taskInfo.priority,
+          dueDate: taskInfo.dueDate
+            ? moment(taskInfo.dueDate).format("YYYY-MM-DD")
+            : null,
+          assignedTo: Array.isArray(taskInfo?.assignedTo)
+            ? taskInfo.assignedTo.map((item) => item?._id)
+            : taskInfo?.assignedTo
+            ? [taskInfo.assignedTo._id]
+            : [],
+          todoCheckList:
+            taskInfo?.todoCheckList?.map((item) => item?.text) || [],
+          attachments: taskInfo?.attachments || [],
+        }));
+      }
+    } catch (error) {
+      console.log("Error Fetching Users: ", error);
+    }
+  };
 
   // Delete Task
   const deleteTask = async () => {};
+
+  useEffect(() => {
+    if (taskId) {
+      getTaskDetailsByID(taskId);
+    }
+
+    return () => {};
+  }, [taskId]);
 
   return (
     <DashboardLayout activeMenu="Create Task">
@@ -148,7 +211,7 @@ const CreateTask = () => {
               </label>
               <input
                 placeholder="Create App UI"
-                className="form-input"
+                className="form-input focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 value={taskData.title}
                 onChange={({ target }) =>
                   handleValueChange("title", target.value)
@@ -162,7 +225,7 @@ const CreateTask = () => {
               </label>
               <textarea
                 placeholder="Describe task"
-                className="form-input"
+                className="form-input focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                 rows={4}
                 value={taskData.description}
                 onChange={({ target }) =>
@@ -181,7 +244,7 @@ const CreateTask = () => {
                   value={taskData.priority}
                   onChange={(value) => handleValueChange("priority", value)}
                   placeholder="Select Priority"
-                  className="form-input"
+                  className="form-input "
                 />
               </div>
 
@@ -191,8 +254,8 @@ const CreateTask = () => {
                 </label>
                 <input
                   placeholder="Create App UI"
-                  className="w-full text-sm text-black bg-white rounded-md px-2.5 py-3 mt-0 border border-slate-100 outline-none placeholder:text-gray-500"
-                  value={taskData.dueDate|| ""}
+                  className="w-full text-sm text-black bg-white rounded-md px-2.5 py-3 mt-0 border border-slate-100 outline-none placeholder:text-gray-500 focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+                  value={taskData.dueDate || ""}
                   onChange={({ target }) =>
                     handleValueChange("dueDate", target.value)
                   }

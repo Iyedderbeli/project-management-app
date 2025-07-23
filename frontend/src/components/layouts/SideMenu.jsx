@@ -58,7 +58,7 @@ const SideMenu = ({ activeMenu }) => {
           className={`w-full flex items-center gap-4 text-[15px] text-black ${
             activeMenu === item.label
               ? "text-primary bg-blue-100 border-r-4 border-blue-500 py-3 px-6 mb-3 cursor-pointer shadow-md"
-              : "py-3 px-6 mb-3 cursor-pointer"
+              : "py-3 px-6 mb-3 cursor-pointer hover:bg-blue-50 hover:border-blue-100"
           }`}
           onClick={() => handleClick(item.path)}
         >

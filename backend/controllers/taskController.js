@@ -147,7 +147,7 @@ const updateTask = async (req, res) => {
             task.assignedTo = req.body.assignedTo;
         }
 
-        const updatedTask = await astk.save();
+        const updatedTask = await task.save();
         res.json({message:"Task updated successfully", updatedTask});
 
     } catch (error) {
