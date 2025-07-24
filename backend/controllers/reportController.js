@@ -23,9 +23,13 @@ const exportTasksReport = async (req, res) => {
     ];
 
     tasks.forEach((task) => {
-      const assignedTo = task.assignedTo
-        .map((user) => `${user.name} (${user.email})`)
-        .join(", ");
+      const assignedTo = Array.isArray(task.assignedTo)
+        ? task.assignedTo
+            .map((user) => `${user.name} (${user.email})`)
+            .join(", ")
+        : task.assignedTo
+        ? `${task.assignedTo.name} (${task.assignedTo.email})`
+        : "Unassigned";
 
       worksheet.addRow({
         _id: task._id,
@@ -33,8 +37,8 @@ const exportTasksReport = async (req, res) => {
         description: task.description,
         priority: task.priority,
         status: task.status,
-        dueDate: task.dueDate.toISOString().split("T")[0],
-        assignedTo: assignedTo || "Unassigned",
+        dueDate: task.dueDate ? task.dueDate.toISOString().split("T")[0] : "",
+        assignedTo: assignedTo,
       });
     });
 
@@ -83,7 +87,7 @@ const exportUsersReport = async (req, res) => {
     });
 
     userTasks.forEach((task) => {
-      if (task.assignedTo) {
+      if (Array.isArray(task.assignedTo)) {
         task.assignedTo.forEach((assignedUser) => {
           if (userTaskMap[assignedUser._id]) {
             userTaskMap[assignedUser._id].taskCount += 1;
@@ -126,12 +130,13 @@ const exportUsersReport = async (req, res) => {
     res.setHeader(
       "Content-Disposition",
       `attachment; filename="users-report.xlsx"`
-      );
-      
-      return workbook.xlsx.write(res).then(() => {
-          res.end();
-       });
+    );
+
+    return workbook.xlsx.write(res).then(() => {
+      res.end();
+    });
   } catch (error) {
+    console.error(error); // Add this line
     res
       .status(500)
       .json({ message: "Error exporting tasks", error: error.message });

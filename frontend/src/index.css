@@ -53,3 +53,6 @@
 .download-btn {
   @apply  items-center gap-3 md:text-[13px] font-medium text-lime-900  bg-lime-100 border border-lime-200 hover:border-lime-400 px-2 md:px-3 py-2 rounded cursor-pointer;
 }
+.user-card{
+  @apply bg-white p-4 shadow-md rounded-xl   shadow-gray-100 border border-gray-200/50;
+}

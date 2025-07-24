@@ -310,6 +310,7 @@ const CreateTask = () => {
                 }
               />
             </div>
+            
 
             {error && (
               <p className="text-red-500 text-xs font-medium mt-5">{error}</p>
