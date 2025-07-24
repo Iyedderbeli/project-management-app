@@ -201,7 +201,7 @@ const CreateTask = () => {
           <div className="form-card col-span-3">
             <div className="flex items-center justify-between">
               <h2 className="text-xl md:text-xl font-medium">
-                {taskId ? "Update Task" : "Create Task"}
+                {taskId ? "Update Project" : "Create Project"}
               </h2>
 
               {taskId && (
@@ -218,7 +218,7 @@ const CreateTask = () => {
             </div>
             <div className="mt-4">
               <label className="text-xs font-medium text-slate-600">
-                Task Title
+                Project Title
               </label>
               <input
                 placeholder="Create App UI"
@@ -288,7 +288,7 @@ const CreateTask = () => {
             </div>
             <div className="mt-3">
               <label className="text-xs font-medium text-slate-600">
-                To-Do Checklist
+                Tasks List
               </label>
 
               <TodoListInput
@@ -322,7 +322,7 @@ const CreateTask = () => {
                 onClick={handleSubmit}
                 disabled={loading}
               >
-                {taskId ? "Update Task" : "Create Task"}
+                {taskId ? "Update Project" : "Create Project"}
               </button>
             </div>
           </div>

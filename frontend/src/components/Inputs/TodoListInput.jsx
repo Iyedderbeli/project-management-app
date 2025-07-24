@@ -63,7 +63,7 @@ const TodoListInput = ({ todoList, setTodoList }) => {
           </svg>
           <input
             type="text"
-            placeholder="Add task"
+            placeholder="Add Task"
             value={option}
             onChange={({ target }) => setOption(target.value)}
             className="w-full text-[13px] text-black bg-white outline-none py-2 "

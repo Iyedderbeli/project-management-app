@@ -72,11 +72,11 @@ const ManageTasks = () => {
     return () => {};
   }, [filterStatus]);
   return (
-    <DashboardLayout activeMenu="Manage Tasks">
+    <DashboardLayout activeMenu="Manage Projects">
       <div className="my-5">
         <div className="flex flex-col lg:flex-row lg:items-center justify-between">
           <div className="flex items-center gap-3 justify-between">
-            <h2 className="text-xl md:text-xl font-medium">My Tasks</h2>
+            <h2 className="text-xl md:text-xl font-medium">My Projects</h2>
             <button
               className="flex lg:hidden download-btn"
               onClick={handleDownloadReport}
@@ -124,9 +124,7 @@ const ManageTasks = () => {
               completedTodoCount={item.completedTodoCount || 0}
               todoCheckList={item.todoCheckList || []}
               onClick={() => handleClick(item)}
-            >
-              
-            </TaskCard>
+            ></TaskCard>
           ))}
         </div>
       </div>

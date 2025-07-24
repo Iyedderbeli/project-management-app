@@ -34,7 +34,7 @@ const TaskListTable = ({ tableData }) => {
           <table className='min-w-full'>
               <thead>
                   <tr className='text-left'>
-                      <th className='font-medium text-[13px] text-gray-800 px-4 py-3'>Task Name</th>
+                      <th className='font-medium text-[13px] text-gray-800 px-4 py-3'>Project Name</th>
                       <th className='font-medium text-[13px] text-gray-800 px-4 py-3'>Status</th>
                       <th className='font-medium text-[13px] text-gray-800 px-4 py-3'>Priority</th>
                       <th className='font-medium text-[13px] text-gray-800 px-4 py-3 hidden md:table-cell'>Created On</th>

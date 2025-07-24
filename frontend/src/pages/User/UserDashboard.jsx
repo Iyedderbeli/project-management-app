@@ -85,28 +85,28 @@ const UserDashboard = () => {
 
         <div className="grid grid-cols-2 md:grid-cols-4 sm:grid-cols-2 gap-3 md:gap-6 mt-5">
           <InfoCard
-            label="Total Tasks"
+            label="Total Projects"
             value={addThousandsSeparator(
               dashboarData?.charts?.taskDistribution?.All || 0
             )}
             color="bg-primary"
           />
           <InfoCard
-            label="Pending Tasks"
+            label="Pending Projects"
             value={addThousandsSeparator(
               dashboarData?.charts?.taskDistribution?.Pending || 0
             )}
             color="bg-violet-500"
           />
           <InfoCard
-            label="In Progress Tasks"
+            label="In Progress Projects"
             value={addThousandsSeparator(
               dashboarData?.charts?.taskDistribution?.InProgress || 0
             )}
             color="bg-cyan-500"
           />
           <InfoCard
-            label="Completed Tasks"
+            label="Completed Projects"
             value={addThousandsSeparator(
               dashboarData?.charts?.taskDistribution?.Completed || 0
             )}
@@ -119,7 +119,7 @@ const UserDashboard = () => {
         <div>
           <div className="card">
             <div className="flex items-center justify-between">
-              <h5 className="text-medium">Task Distribution</h5>
+              <h5 className="text-medium">Project Distribution</h5>
             </div>
             <CustomPieChart data={pieChartData} colors={COLORS} />
           </div>
@@ -128,17 +128,16 @@ const UserDashboard = () => {
         <div>
           <div className="card">
             <div className="flex items-center justify-between">
-              <h5 className="text-medium">Task Priority Levels</h5>
+              <h5 className="text-medium">Project Priority Levels</h5>
             </div>
             <CustomBarChart data={barChartData} />
           </div>
         </div>
 
-
         <div className="md:col-span-2">
           <div className="card">
             <div className="flex items-center justify-between ">
-              <h5 className="text-lg">Recent Tasks</h5>
+              <h5 className="text-lg">Recent Projects</h5>
               <button className="card-btn" onClick={onSeeMore}>
                 See All <LuArrowRight className="text-base" />
               </button>

@@ -82,7 +82,7 @@ const ViewTaskDetails = () => {
   }, [id]);
 
   return (
-    <DashboardLayout activeMenu="My Tasks">
+    <DashboardLayout activeMenu="My Projects">
       <div className="mt-5">
         {task && (
           <div className="grid grid-cols-1 md:grid-cols-4 mt-4">
@@ -136,7 +136,7 @@ const ViewTaskDetails = () => {
 
               <div className="mt-2">
                 <label className="text-xs font-medium text-slate-500">
-                  Todo Checklist
+                  Tasks List
                 </label>
                 {task?.todoCheckList?.map((item, index) => (
                   <TodoCheckList
