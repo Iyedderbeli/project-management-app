@@ -26,14 +26,14 @@ const AddAttahchmentsInput = ({ attachments, setAttachments }) => {
       {attachments.map((item, index) => (
         <div
           key={`${item}-${index}`} // Ensure each item has a unique key
-          className={`flex items-center gap-3 border border-gray-100 px-3 py-2 rounded-md w-full ${
-            isFocused ? "border-blue-500 ring-1 ring-blue-500" : ""
-          }`}
+          className={`flex justify-between bg-gray-50 border border-gray-100 px-3 py-2 rounded-md mb-3 mt-2`}
         >
-          <div className="flex-1 flex items-center gap-3">
-            <LuPaperclip className="text-gray-400" />
-            <p className="text-xs text-black">{item}</p>
-          </div>
+          <p className="text-xs text-black">
+            <span className="text-xs text-gray-400 font-semibold mr-2">
+              {index < 9 ? `0${index + 1}` : index + 1}
+            </span>
+            {item}
+          </p>
           <button
             className="cursor-pointer"
             onClick={() => handleDeleteOption(index)}

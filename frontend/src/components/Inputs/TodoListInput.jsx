@@ -45,7 +45,13 @@ const TodoListInput = ({ todoList, setTodoList }) => {
       {/* Input field for adding a task */}
       <div className="flex items-center gap-5 mt-4 ">
         {/* Input field with task logo (SVG directly embedded) */}
-        <div className="flex items-center gap-3 border border-gray-100 px-3 py-2 rounded-md w-full ">
+        <div
+          onFocus={() => setIsFocused(true)} // On focus
+          onBlur={() => setIsFocused(false)} // On blur
+          className={`flex items-center gap-3 border border-gray-100 px-3 py-2 rounded-md w-full ${
+            isFocused ? "border-blue-500 ring-1 ring-blue-500" : ""
+          }`}
+        >
           {/* SVG Logo (Tasks App) */}
           <svg
             xmlns="http://www.w3.org/2000/svg"

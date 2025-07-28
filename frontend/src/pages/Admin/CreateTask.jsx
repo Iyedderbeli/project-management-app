@@ -39,7 +39,6 @@ const CreateTask = () => {
   };
 
   const clearData = () => {
-    //reset form
     setTaskData({
       title: "",
       description: "",
@@ -60,11 +59,18 @@ const CreateTask = () => {
         completed: false,
       }));
 
-      const response = await axiosInstance.post(API_PATHS.TASKS.CREATE_TASK, {
+      const payload = {
         ...taskData,
         dueDate: new Date(taskData.dueDate).toISOString(),
         todoCheckList: todolist,
-      });
+      };
+
+      console.log("Payload sent to backend:", payload);
+
+      const response = await axiosInstance.post(
+        API_PATHS.TASKS.CREATE_TASK,
+        payload
+      );
 
       toast.success("Task created successfully.");
       clearData();
@@ -80,21 +86,24 @@ const CreateTask = () => {
   const updateTask = async () => {
     setLoading(true);
     try {
-      const todolist = taskData.todoCheckList?.map((item) => { 
+      const todolist = taskData.todoCheckList?.map((item) => {
         const prevTodoCheckList = currentTask?.todoCheckList || [];
-        const matchedTask = prevTodoCheckList.find((task) => task.text === item);
+        const matchedTask = prevTodoCheckList.find(
+          (task) => task.text === item
+        );
 
         return {
           text: item,
           completed: matchedTask ? matchedTask.completed : false,
         };
       });
-      
-      const response = await axiosInstance.put(API_PATHS.TASKS.UPDATE_TASK(taskId),
+
+      const response = await axiosInstance.put(
+        API_PATHS.TASKS.UPDATE_TASK(taskId),
         {
-        ...taskData,
-        dueDate: new Date(taskData.dueDate).toISOString(),
-        todoCheckList: todolist,
+          ...taskData,
+          dueDate: new Date(taskData.dueDate).toISOString(),
+          todoCheckList: todolist,
         }
       );
 
@@ -180,9 +189,12 @@ const CreateTask = () => {
       await axiosInstance.delete(API_PATHS.TASKS.DELETE_TASK(taskId));
       setOpenDeleteAlert(false);
       toast.success("Deleted Successfully");
-      navigate('/admin/tasks');
+      navigate("/admin/tasks");
     } catch (error) {
-      console.error("Error Deleting: ", error.response?.data?.message || error.message);
+      console.error(
+        "Error Deleting: ",
+        error.response?.data?.message || error.message
+      );
     }
   };
 
@@ -310,7 +322,6 @@ const CreateTask = () => {
                 }
               />
             </div>
-            
 
             {error && (
               <p className="text-red-500 text-xs font-medium mt-5">{error}</p>
@@ -336,11 +347,10 @@ const CreateTask = () => {
       >
         <DeleteAlert
           content="Are you dure you want to delete this task?"
-          onDelete={()=>deleteTask()}
+          onDelete={() => deleteTask()}
         />
       </Modal>
+      {console.log(taskData)}
     </DashboardLayout>
   );
 };
-
-export default CreateTask;
